@@ -7,7 +7,7 @@ services:
     image: mongo:latest
     restart: always
     volumes:
-      - mongo_db:/data/db
+      - mongo_data:/data/db
 
   # Node API services
   file_sharing_api:
@@ -24,4 +24,5 @@ services:
       - mongo_db
 
 volumes:
-  mongo_db : {}
+  mongo_data :
+    driver: local
