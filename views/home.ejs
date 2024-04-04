@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins" />
     <title>Home</title>
@@ -54,7 +55,38 @@
     </div>
     <div style="text-align: left;">
         <button style="margin: 10px;" class="button" onclick="location.href='/upload'">Share files</button>
-      </div>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <!-- <th scope="col">#</th> -->
+                <th scope="col">Timestamp</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">File name</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <% posts.forEach(function(posts){ %>
+                <tr>
+                    <th scope="row">
+                        <%= posts.timeStamp.toLocaleString('en-TH', { timeZone: 'Asia/Bangkok' }) %>
+                    </th>
+                    <td>
+                        <%= posts.postName %>
+                    </td>
+                    <td>
+                        <%= posts.postDesp %>
+                    </td>
+                    <td>
+                        <a href=<%= posts.path %>><%= posts.originalName %> </a>
+                    </td>
+
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
 </div>
 
 <script>
