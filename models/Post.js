@@ -25,6 +25,11 @@ const Post = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    postAuthor: {
+        type: String,
+        required: true,
+        default: "anon"
     }
 })
 
