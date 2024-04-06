@@ -7,11 +7,15 @@ const path = require("path");
 const Post = require("./models/Post.js");
 const User = require('./models/User.js');
 const fs = require("fs").promises;
+const jwt = require('jsonwebtoken')
+const { jwtAuth } = require('./jwtAuth.js');
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 require('./initDB.js')();
 
@@ -19,12 +23,12 @@ app.use(express.static(__dirname + "/public"));
 
 app.set("view engine", "ejs");
 
-app.get('/', async (req, res) => {
+app.get('/', jwtAuth, async (req, res) => {
   const posts = await Post.find().lean().exec();
   res.render('home', { posts });
 });
 
-app.get('/upload', (req, res) => {
+app.get('/upload', jwtAuth, (req, res) => {
   res.render('upload');
 });
 
@@ -39,28 +43,65 @@ app.get('/register/:err', (req, res) => {
   res.render('register', { err_code });
 });
 
+app.get('/login', (req, res) => {
+  let err_code = 200;
+  res.render('login', { err_code });
+});
+
+app.get('/login/:err', (req, res) => {
+  let err_code = req.params.err;
+  console.log(err_code)
+  res.render('login', { err_code });
+});
+
+app.post('/signin', async (req, res) => {
+  console.log(req.body)
+  const query = User.where({ username: req.body.username });
+  const user = await query.findOne();
+  if(user === null) {
+    return res.redirect('/login/100');
+  } else {
+    if ( await bcrypt.compare(req.body.password, user.password)) {
+      const token = jwt.sign(
+        {
+          username: user.username
+        },
+        process.env.PRIVATE_KEY,
+        { expiresIn: "1h" }
+      ); 
+      console.log(token);
+      res.cookie("token", token, { httpOnly: true });
+      res.cookie("username", user.username, { httpOnly: true });
+      return res.redirect('/');
+    } else {
+      return res.redirect('/login/100');
+    }
+  }
+});
+
 app.post("/createUser", async (req, res) => {
   console.log(req.body);
   if (req.body.password !== req.body.re_password) {
-    return res.redirect("/register/609");
-  }
-  try {
-    const userData = {
-      username: req.body.username,
-    };
-    userData.password = await bcrypt.hash(req.body.password, 10);
-    console.log(userData);
-    await User.create(userData)
-      .then(() => {
-        console.log("User Created");
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  } catch (e) {
-    console.log(e);
-  } finally {
-    res.send("OK");
+    return res.redirect("/register/100");
+  } else {
+    try {
+      const userData = {
+        username: req.body.username,
+      };
+      userData.password = await bcrypt.hash(req.body.password, 10);
+      console.log(userData);
+      await User.create(userData)
+        .then(() => {
+          console.log("User Created");
+          return res.redirect('/login')
+        })
+        .catch((e) => {
+          console.log(e);
+          return res.redirect('/register/101')
+        });
+    } catch (e) {
+      console.log(e);
+    }
   }
 });
 
@@ -98,11 +139,18 @@ app.post('/wipeDatabase', async (req, res) => {
   });
   Post.deleteMany()
     .then( () => {
-      console.log("Database deleted");
+      console.log("Posts database deleted");
     })
     .catch( (e) => {
       console.log(e);
     });
+  User.deleteMany()
+    .then( () => {
+      console.log("User database deleted");
+    })
+    .catch( (e) => {
+      console.log(e);
+    })
   res.send("Database wiped");
 });
 
@@ -133,16 +181,28 @@ app.post('/createPost', upload.single("attachment"), async (req, res) => {
   }
 });
 
-app.get('/fetchPosts', async (req, res) => {
-  const post = await Post.find().lean().exec();
-  res.send(post);
+app.get('/fetch/:data', async (req, res) => {
+  if(req.params.data === 'posts') {
+    const post = await Post.find().lean().exec();
+    res.send(post);
+  } else if (req.params.data === 'users') {
+    const post = await User.find().lean().exec();
+    res.send(post);
+  } else {
+    res.sendStatus(404)
+  }
 });
 
-app.get('/storage/:fileId', (req, res) => {
+app.get('/storage/:fileId', async (req, res) => {
   console.log("requested file : " + req.params.fileId);
   try {
-    res.sendFile(path.join(__dirname, './storage/' + req.params.fileId));
-    console.log("file served");
+    const query = Post.where({ path: 'storage/' +  req.params.fileId});
+    const post = await query.findOne();
+    res.download(post.path, post.originalName);
+    post.downloadCnt++;
+    await post.save();
+    console.log("Download count updated and file served");
+    console.log(post);
   } catch (e) {
     console.log(e);
   }

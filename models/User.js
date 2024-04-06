@@ -14,6 +14,11 @@ const User = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    lastLoggedin:{
+        type: Date,
+        required: true,
+        default: Date.now
     }
 })
 

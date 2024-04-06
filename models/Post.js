@@ -15,7 +15,8 @@ const Post = new mongoose.Schema({
     },
     path: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     originalName: {
         type: String,
