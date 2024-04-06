@@ -9,7 +9,8 @@
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins" />
-    <title>Upload</title>
+    <title>Login</title>
+    <div id="alertMessage"><%= err_code %></div>
 </head>
 
 <header class="w3-container w3-top w3-hide-large w3-indigo w3-xlarge w3-padding">
@@ -35,25 +36,32 @@
 
 <div class="w3-main" style="margin-left:340px;margin-right:40px">
     <div class="w3-container" style="margin-top:80px" id="showcase">
-        <h1 class="w3-xxlarge"><b>Uploading</b></h1>
+        <h1 class="w3-xxlarge"><b>Login</b></h1>
         <h1 class="w3-xlarge w3-text-indigo"><b>Page</b></h1>
         <hr style="width:100px;border:5px solid #3f51b5" class="w3-round">
-        <form name="uploadForm" method="post" action="/createPost" enctype="multipart/form-data">
+        <form name="uploadForm" method="post" action="/signin">
           <div class="w3-section">
-            <label>Name</label>
-            <input class="w3-input w3-border" type="text" name="postName" placeholder="Enter file name" required>
+            <label>Username</label>
+            <input class="w3-input w3-border" type="text" name="username" placeholder="Enter username" required>
           </div>
           <div class="w3-section">
-            <label>Description</label>
-            <textarea class="w3-input w3-border" maxlength="1023" name="postDesp" placeholder="Enter file description" required></textarea>
+            <label>Password</label>
+            <input class="w3-input w3-border" type="password" name="password" placeholder="Enter password" required>
           </div>
-          <input type="file" name="attachment" required>
-          <button type="submit" value="send" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom">Upload</button>
+          <button type="submit" value="send" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom">Register</button>
         </form>  
     </div>
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        // Get the message content from the rendered HTML
+        var message = document.getElementById('alertMessage').innerText;
+        // Alert the message
+        if (message != 200) {
+            alert("Incorrect username or password");
+        }
+    });
     // Script to open and close sidebar
     function w3_open() {
         document.getElementById("mySidebar").style.display = "block";

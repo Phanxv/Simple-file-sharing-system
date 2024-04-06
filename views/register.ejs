@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins" />
     <title>Register</title>
-
+    <div id="alertMessage"><%= err_code %></div>
 </head>
 
 <header class="w3-container w3-top w3-hide-large w3-indigo w3-xlarge w3-padding">
     <a href="javascript:void(0)" class="w3-button w3-indigo w3-margin-right" onclick="w3_open()">☰</a>
-    <span>Company Name</span>
+    <span>Simple File Sharing</span>
 </header>
 
 <nav class="w3-sidebar w3-indigo w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;"
@@ -46,28 +46,27 @@
           </div>
           <div class="w3-section">
             <label>Password</label>
-            <input class="w3-input w3-border" type="text" name="password" placeholder="Enter password" required>
+            <input class="w3-input w3-border" type="password" name="password" placeholder="Enter password" required>
           </div>
           <div class="w3-section">
             <label>Re-Enter Password</label>
-            <input class="w3-input w3-border" type="text" name="re_password" placeholder="Enter password" required>
+            <input class="w3-input w3-border" type="password" name="re_password" placeholder="Enter password" required>
           </div>
           <button type="submit" value="send" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom">Register</button>
         </form>  
     </div>
 </div>
-<div id="alertMessage"><%= err_code %></div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
         // Get the message content from the rendered HTML
         var message = document.getElementById('alertMessage').innerText;
         // Alert the message
-        if(message != 200){
-            if(message == 609) {
-                alert("Password does not match")
+            if(message == 100) {
+                alert("Password does not match");
+            } else if (message == 101) {
+                alert("Username taken");
             }
-        }
     });
     // Script to open and close sidebar
     function w3_open() {
