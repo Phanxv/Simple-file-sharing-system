@@ -25,11 +25,12 @@
         <h3 class="w3-padding-64"><b>Simple<br>File Sharing</b></h3>
     </div>
     <div class="w3-bar-block">
-        <a href="/" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
-        <a href="/register" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Register</a>
-        <a href="/login" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log in</a>
-        <a href="/upload" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Upload</a>
-        <a href="/users" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Users</a>
+        <a href="/" class="w3-bar-item w3-button w3-hover-white">Home</a>
+        <a href="/register" class="w3-bar-item w3-button w3-hover-white">Register</a>
+        <a href="/login" class="w3-bar-item w3-button w3-hover-white">Log in</a>
+        <a href="/upload" class="w3-bar-item w3-button w3-hover-white">Upload</a>
+        <a href="/users" class="w3-bar-item w3-button w3-hover-white">Users</a>
+        <a href="/signout" class="w3-bar-item w3-button w3-hover-white">Log out</a>
     </div>
 </nav>
 
@@ -40,7 +41,8 @@
         <hr style="width:100px;border:5px solid #3f51b5" class="w3-round">
         <form name="uploadForm" method="post" action="/createPost" enctype="multipart/form-data">
           <div class="w3-section">
-            <label>Name</label>
+            <label class="w3-text-indigo">Upload under username : <%= username %></label>
+            <br><br><label>Name</label>
             <input class="w3-input w3-border" type="text" name="postName" placeholder="Enter file name" required>
           </div>
           <div class="w3-section">

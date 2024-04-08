@@ -25,11 +25,12 @@
         <h3 class="w3-padding-64"><b>Simple<br>File Sharing</b></h3>
     </div>
     <div class="w3-bar-block">
-        <a href="/" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
-        <a href="/register" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Register</a>
-        <a href="/login" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Log in</a>
-        <a href="/upload" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Upload</a>
-        <a href="/users" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Users</a>
+        <a href="/" class="w3-bar-item w3-button w3-hover-white">Home</a>
+        <a href="/register" class="w3-bar-item w3-button w3-hover-white">Register</a>
+        <a href="/login" class="w3-bar-item w3-button w3-hover-white">Log in</a>
+        <a href="/upload" class="w3-bar-item w3-button w3-hover-white">Upload</a>
+        <a href="/users" class="w3-bar-item w3-button w3-hover-white">Users</a>
+        <a href="/signout" class="w3-bar-item w3-button w3-hover-white">Log out</a>
     </div>
 </nav>
 
@@ -60,21 +61,24 @@
         <thead>
             <tr>
                 <!-- <th scope="col">#</th> -->
-                <th scope="col">Timestamp</th>
                 <th scope="col">Name</th>
+                <th scope="col">Author</th>
+                <th scope="col">Timestamp</th>
                 <th scope="col">Description</th>
-                <th scope="col">File name</th>
-
+                <th scope="col">Attachment</th>
             </tr>
         </thead>
         <tbody>
             <% posts.forEach(function(posts){ %>
                 <tr>
                     <th scope="row">
-                        <%= posts.timeStamp.toLocaleString('en-TH', { timeZone: 'Asia/Bangkok' }) %>
+                        <%= posts.postName %>
                     </th>
                     <td>
-                        <%= posts.postName %>
+                        <%= posts.postAuthor %>
+                    </td>
+                    <td>
+                        <%= posts.timeStamp.toLocaleString('en-TH', { timeZone: 'Asia/Bangkok' }) %>
                     </td>
                     <td>
                         <%= posts.postDesp %>
@@ -82,7 +86,6 @@
                     <td>
                         <a href=<%= posts.path %>><%= posts.originalName %> </a>
                     </td>
-
                 </tr>
                 <% }); %>
         </tbody>
