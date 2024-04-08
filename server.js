@@ -10,6 +10,7 @@ const fs = require("fs").promises;
 const jwt = require('jsonwebtoken')
 const { jwtAuth } = require('./jwtAuth.js');
 const cookieParser = require("cookie-parser");
+const os = require('os');
 
 const app = express();
 
@@ -29,7 +30,8 @@ app.get('/', jwtAuth, async (req, res) => {
 });
 
 app.get('/upload', jwtAuth, (req, res) => {
-  res.render('upload');
+  const username = req.cookies.username
+  res.render('upload' , { username });
 });
 
 app.get('/register', (req, res) => {
@@ -69,15 +71,28 @@ app.post('/signin', async (req, res) => {
         process.env.PRIVATE_KEY,
         { expiresIn: "1h" }
       ); 
-      console.log(token);
+      console.log(`User ${user.username} logged in with token : ${token}`);
       res.cookie("token", token, { httpOnly: true });
       res.cookie("username", user.username, { httpOnly: true });
+      user.isLoggedin = true;
+      user.lastLoggedin = Date.now();
+      await user.save();
       return res.redirect('/');
     } else {
       return res.redirect('/login/100');
     }
   }
 });
+
+app.get('/signout', async (req, res) => {
+  const query = User.where({ username: req.cookies.username });
+  const user = await query.findOne();
+  user.isLoggedin = false;
+  await user.save();
+  res.clearCookie('token');
+  res.clearCookie('username');
+  res.redirect('/')
+})
 
 app.post("/createUser", async (req, res) => {
   console.log(req.body);
@@ -132,6 +147,7 @@ async function deleteFile(filePath) {
   }
 }
 
+/*---This endpoint is here for development purposes---*/
 app.post('/wipeDatabase', async (req, res) => {
   const posts = await Post.find();
   posts.forEach((element) => {
@@ -157,12 +173,14 @@ app.post('/wipeDatabase', async (req, res) => {
 app.post('/createPost', upload.single("attachment"), async (req, res) => {
   console.log(req.body);
   console.log(req.file);
+  console.log(req.cookies.username);
   try {
     const postData = {
       postName: req.body.postName,
       postDesp: req.body.postDesp,
       path: req.file.path,
       originalName: req.file.originalname,
+      postAuthor: req.cookies.username
     };
 
     await Post.create(postData)
@@ -181,6 +199,7 @@ app.post('/createPost', upload.single("attachment"), async (req, res) => {
   }
 });
 
+/*---This endpoint is here for development purposes---*/
 app.get('/fetch/:data', async (req, res) => {
   if(req.params.data === 'posts') {
     const post = await Post.find().lean().exec();
@@ -203,6 +222,7 @@ app.get('/storage/:fileId', async (req, res) => {
     await post.save();
     console.log("Download count updated and file served");
     console.log(post);
+    res.redirect('/')
   } catch (e) {
     console.log(e);
   }
