@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const User = require("../models/User")
 
 async function signInUser(req, res) {
-  console.log(req.body);
   const query = User.where({ username: req.body.username });
   const user = await query.findOne();
   if (user === null) {
