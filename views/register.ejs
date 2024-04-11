@@ -2,35 +2,17 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins" />
-    <title>Register</title>
-    <div id="alertMessage"><%= err_code %></div>
+    <%- include('./partials/head'); %>
+        <title>Register</title>
 </head>
 
 <header class="w3-container w3-top w3-hide-large w3-indigo w3-xlarge w3-padding">
-    <a href="javascript:void(0)" class="w3-button w3-indigo w3-margin-right" onclick="w3_open()">☰</a>
-    <span>Simple File Sharing</span>
+    <%- include('./partials/header'); %>
 </header>
 
 <nav class="w3-sidebar w3-indigo w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;"
-    id="mySidebar"><br>
-    <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
-        style="width:100%;font-size:22px">X</a>
-    <div class="w3-container">
-        <h3 class="w3-padding-64"><b>Simple<br>File Sharing</b></h3>
-    </div>
-    <div class="w3-bar-block">
-        <a href="/" class="w3-bar-item w3-button w3-hover-white">Home</a>
-        <a href="/register" class="w3-bar-item w3-button w3-hover-white">Register</a>
-        <a href="/login" class="w3-bar-item w3-button w3-hover-white">Log in</a>
-        <a href="/upload" class="w3-bar-item w3-button w3-hover-white">Upload</a>
-        <a href="/users" class="w3-bar-item w3-button w3-hover-white">Users</a>
-    </div>
+    id="mySidebar">
+    <%- include('./partials/navbar') %>
 </nav>
 
 <div class="w3-main" style="margin-left:340px;margin-right:40px">
@@ -39,45 +21,36 @@
         <h1 class="w3-xlarge w3-text-indigo"><b>Page</b></h1>
         <hr style="width:100px;border:5px solid #3f51b5" class="w3-round">
         <form name="uploadForm" method="post" action="/createUser">
-          <div class="w3-section">
-            <label>Username</label>
-            <input class="w3-input w3-border" type="text" name="username" placeholder="Enter username" required>
-          </div>
-          <div class="w3-section">
-            <label>Password</label>
-            <input class="w3-input w3-border" type="password" name="password" placeholder="Enter password" required>
-          </div>
-          <div class="w3-section">
-            <label>Re-Enter Password</label>
-            <input class="w3-input w3-border" type="password" name="re_password" placeholder="Enter password" required>
-          </div>
-          <button type="submit" value="send" class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom">Register</button>
-        </form>  
+            <div class="w3-section">
+                <label>Username</label>
+                <input class="w3-input w3-border" type="text" name="username" placeholder="Enter username" required>
+            </div>
+            <div class="w3-section">
+                <label>Password</label>
+                <input class="w3-input w3-border" type="password" name="password" placeholder="Enter password" required>
+            </div>
+            <div class="w3-section">
+                <label>Re-Enter Password</label>
+                <input class="w3-input w3-border" type="password" name="re_password" placeholder="Enter password"
+                    required>
+            </div>
+            <button type="submit" value="send"
+                class="w3-button w3-block w3-padding-large w3-indigo w3-margin-bottom">Register</button>
+        </form>
     </div>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", function (event) {
         // Get the message content from the rendered HTML
         var message = document.getElementById('alertMessage').innerText;
         // Alert the message
-            if(message == 100) {
-                alert("Password does not match");
-            } else if (message == 101) {
-                alert("Username taken");
-            }
+        if (message == 100) {
+            alert("Password does not match");
+        } else if (message == 101) {
+            alert("Username taken");
+        }
     });
-    // Script to open and close sidebar
-    function w3_open() {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("myOverlay").style.display = "block";
-    }
-
-    function w3_close() {
-        document.getElementById("mySidebar").style.display = "none";
-        document.getElementById("myOverlay").style.display = "none";
-    }
-
 </script>
 
 </html>

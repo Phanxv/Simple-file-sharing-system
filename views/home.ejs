@@ -2,35 +2,17 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins" />
-    <title>Home</title>
+    <%- include('./partials/head'); %>
+        <title>Home</title>
 </head>
 
 <header class="w3-container w3-top w3-hide-large w3-indigo w3-xlarge w3-padding">
-    <a href="javascript:void(0)" class="w3-button w3-indigo w3-margin-right" onclick="w3_open()">☰</a>
-    <span>Simple File Sharing</span>
+    <%- include('./partials/header'); %>
 </header>
 
 <nav class="w3-sidebar w3-indigo w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;"
-    id="mySidebar"><br>
-    <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft"
-        style="width:100%;font-size:22px">X</a>
-    <div class="w3-container">
-        <h3 class="w3-padding-64"><b>Simple<br>File Sharing</b></h3>
-    </div>
-    <div class="w3-bar-block">
-        <a href="/" class="w3-bar-item w3-button w3-hover-white">Home</a>
-        <a href="/register" class="w3-bar-item w3-button w3-hover-white">Register</a>
-        <a href="/login" class="w3-bar-item w3-button w3-hover-white">Log in</a>
-        <a href="/upload" class="w3-bar-item w3-button w3-hover-white">Upload</a>
-        <a href="/users" class="w3-bar-item w3-button w3-hover-white">Users</a>
-        <a href="/signout" class="w3-bar-item w3-button w3-hover-white">Log out</a>
-    </div>
+    id="mySidebar">
+    <%- include('./partials/navbar') %>
 </nav>
 
 <div class="w3-main" style="margin-left:340px;margin-right:40px">
@@ -38,20 +20,6 @@
         <h1 class="w3-xxlarge"><b>Shared</b></h1>
         <h1 class="w3-xlarge w3-text-indigo"><b>Content</b></h1>
         <hr style="width:100px;border:5px solid #3f51b5" class="w3-round">
-    </div>
-    <div class="w3-container" id="services" style="margin-top:25px">
-        <p>Some text about our services - what we do and what we offer. We are lorem ipsum consectetur adipiscing elit,
-            sed
-            do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-            occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing
-            elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris
-            nisi ut aliquip ex ea commodo consequat.
-        </p>
     </div>
     <div style="text-align: left;">
         <button style="margin: 10px;" class="button" onclick="location.href='/upload'">Share files</button>
@@ -83,26 +51,12 @@
                         <%= posts.postDesp %>
                     </td>
                     <td>
-                        <a href=<%= posts.path %>><%= posts.originalName %> </a>
+                        <a href=<%=posts.path %>><%= posts.originalName %> </a>
                     </td>
                 </tr>
                 <% }); %>
         </tbody>
     </table>
 </div>
-
-<script>
-    // Script to open and close sidebar
-    function w3_open() {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("myOverlay").style.display = "block";
-    }
-
-    function w3_close() {
-        document.getElementById("mySidebar").style.display = "none";
-        document.getElementById("myOverlay").style.display = "none";
-    }
-
-</script>
 
 </html>
