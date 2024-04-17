@@ -17,9 +17,9 @@
 
 <div class="w3-main" style="margin-left:340px;margin-right:40px">
     <div class="w3-container" style="margin-top:80px" id="showcase">
-        <h1 class="w3-xxlarge"><b>Shared Content</b></h1>
+        <h1 class="w3-xxlarge"><b>Shared</b></h1>
+        <h1 class="w3-xlarge w3-text-indigo"><b>Content</b></h1>
         <hr style="width:100px;border:5px solid #3f51b5" class="w3-round">
-        <p>All contents that users have shared can be found here.</p>
     </div>
     <div style="text-align: left;">
         <button style="margin: 10px;" class="button" onclick="location.href='/upload'">Share files</button>
@@ -28,30 +28,22 @@
         <thead>
             <tr>
                 <!-- <th scope="col">#</th> -->
-                <th scope="col">Name</th>
-                <th scope="col">Author</th>
-                <th scope="col">Timestamp</th>
-                <th scope="col">Description</th>
-                <th scope="col">Attachment</th>
+                <th scope="col">Username</th>
+                <th scope="col">Log in Status</th>
+                <th scope="col">Last logged in</th>
             </tr>
         </thead>
         <tbody>
-            <% posts.forEach(function(posts){ %>
+            <% users.forEach(function(users){ %>
                 <tr>
                     <th scope="row">
-                        <%= posts.postName %>
+                        <%= users.username %>
                     </th>
                     <td>
-                        <%= posts.postAuthor %>
+                        <%= users.isLoggedin %>
                     </td>
                     <td>
-                        <%= posts.timeStamp.toLocaleString('en-TH', { timeZone: 'Asia/Bangkok' }) %>
-                    </td>
-                    <td>
-                        <%= posts.postDesp %>
-                    </td>
-                    <td>
-                        <a href=<%=posts.path %>><%= posts.originalName %> </a>
+                        <%= users.lastLoggedin.toLocaleString('en-TH', { timeZone: 'Asia/Bangkok' }) %>
                     </td>
                 </tr>
                 <% }); %>
