@@ -16,9 +16,10 @@ const User = new mongoose.Schema({
         default: false
     },
     lastLoggedin:{
-        type: Date,
-        required: true,
-        default: Date.now
+        type: Date
+    },
+    jwtToken:{
+        type: String
     }
 })
 

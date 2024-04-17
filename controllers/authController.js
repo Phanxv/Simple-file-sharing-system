@@ -20,6 +20,7 @@ async function signInUser(req, res) {
       res.cookie("token", token, { httpOnly: true });
       res.cookie("username", user.username, { httpOnly: true });
       user.isLoggedin = true;
+      user.jwtToken = await bcrypt.hash(token, 10);
       user.lastLoggedin = Date.now();
       await user.save();
       return res.redirect("/");
