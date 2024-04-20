@@ -6,7 +6,7 @@ async function signInUser(req, res) {
   const query = User.where({ username: req.body.username });
   const user = await query.findOne();
   if (user === null) {
-    return res.redirect("/login/100");
+    return res.redirect("/login/?msg=Incorrect Username or password");
   } else {
     if (await bcrypt.compare(req.body.password, user.password)) {
       const token = jwt.sign(
@@ -25,7 +25,7 @@ async function signInUser(req, res) {
       await user.save();
       return res.redirect("/");
     } else {
-      return res.redirect("/login/100");
+      return res.redirect("/login/?msg=Incorrect Username or password");
     }
   }
 }
@@ -42,7 +42,7 @@ async function signOutUser(req, res) {
 
 async function createUser(req, res) {
   if (req.body.password !== req.body.re_password) {
-    return res.redirect("/register/100");
+    return res.redirect("/register/?msg=Password mismatch");
   } else {
     try {
       const userData = {
@@ -57,7 +57,7 @@ async function createUser(req, res) {
         })
         .catch((e) => {
           console.log(e);
-          return res.redirect("/register/101");
+          return res.redirect("/register/?msg=Username taken");
         });
     } catch (e) {
       console.log(e);

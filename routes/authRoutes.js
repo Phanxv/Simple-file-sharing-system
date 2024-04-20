@@ -15,34 +15,18 @@ router.get("/upload", jwtAuth, (req, res) => {
 });
 
 router.get("/register", (req, res) => {
-  let err_code = 200;
-  res.render("register", { err_code });
-});
-
-router.get("/register/:err", (req, res) => {
-  let err_code = req.params.err;
-  console.log(err_code);
-  res.render("register", { err_code });
+  let msg = req.query.msg;
+  res.render("register", { message : msg });
 });
 
 router.get("/login", (req, res) => {
-  let err_code = 200;
-  res.render("login", { err_code });
+  let msg = req.query.msg;
+  res.render("login", { message : msg });
 });
 
-router.get("/login/:err", (req, res) => {
-  let err_code = req.params.err;
-  console.log(err_code);
-  res.render("login", { err_code });
-});
-
-router.get("/test", (req, res) => {
-  console.log(req.query.msg);
-  res.sendStatus(200);
-});
 
 router.post("/signin", signInUser);
-router.get("/signout", signOutUser);
+router.get("/signout", jwtAuth,signOutUser);
 router.post("/user", createUser);
 
 module.exports = router;
