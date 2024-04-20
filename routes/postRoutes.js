@@ -11,9 +11,9 @@ const {
   serveFile,
 } = require("../controllers/postController");
 
-router.post("/createPost", upload.single("attachment"), createPost);
-router.post("/wipeDatabase", wipeDatabase);
-router.get("/fetch/:data", fetchData);
+router.post("/post", upload.single("attachment"), createPost);
+router.delete("/database", wipeDatabase); //for deveopment purpose only
+router.get("/database/:data", fetchData);
 router.get("/storage/:fileId", jwtAuth, serveFile);
 
 router.get("/users", jwtAuth, async (req, res) => {

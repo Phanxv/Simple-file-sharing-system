@@ -36,8 +36,13 @@ router.get("/login/:err", (req, res) => {
   res.render("login", { err_code });
 });
 
+router.get("/test", (req, res) => {
+  console.log(req.query.msg);
+  res.sendStatus(200);
+});
+
 router.post("/signin", signInUser);
 router.get("/signout", signOutUser);
-router.post("/createUser", createUser);
+router.post("/user", createUser);
 
 module.exports = router;
