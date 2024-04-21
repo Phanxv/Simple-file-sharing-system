@@ -40,6 +40,19 @@ async function deleteFile(filePath) {
   }
 }
 
+async function deletePost(req, res) {
+  const id = req.params.id;
+  try {
+    const post = await Post.findByIdAndDelete(id);
+    await deleteFile(post.path);
+    res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error deleting post");
+  }
+}
+
+
 async function wipeDatabase(req, res) {
   const posts = await Post.find();
   posts.forEach((element) => {
@@ -79,7 +92,10 @@ async function serveFile(req, res) {
   try {
     const query = Post.where({ path: "storage/" + req.params.fileId });
     const post = await query.findOne();
-    res.download(path.join(process.env.UPLOAD_PATH, req.params.fileId), post.originalName);
+    res.download(
+      path.join(process.env.UPLOAD_PATH, req.params.fileId),
+      post.originalName
+    );
     post.downloadCnt++;
     await post.save();
     console.log("Download count updated and file served");
@@ -90,6 +106,7 @@ async function serveFile(req, res) {
 
 module.exports = {
   createPost,
+  deletePost,
   wipeDatabase,
   fetchData,
   serveFile,

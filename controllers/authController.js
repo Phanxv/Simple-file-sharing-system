@@ -6,7 +6,7 @@ async function signInUser(req, res) {
   const query = User.where({ username: req.body.username });
   const user = await query.findOne();
   if (user === null) {
-    return res.redirect("/login/?msg=Incorrect Username or password");
+    return res.redirect("/login/?msg=Incorrect Username or password.");
   } else {
     if (await bcrypt.compare(req.body.password, user.password)) {
       const token = jwt.sign(
@@ -25,7 +25,7 @@ async function signInUser(req, res) {
       await user.save();
       return res.redirect("/");
     } else {
-      return res.redirect("/login/?msg=Incorrect Username or password");
+      return res.redirect("/login/?msg=Incorrect Username or password.");
     }
   }
 }
@@ -42,7 +42,7 @@ async function signOutUser(req, res) {
 
 async function createUser(req, res) {
   if (req.body.password !== req.body.re_password) {
-    return res.redirect("/register/?msg=Password mismatch");
+    return res.redirect("/register/?msg=Password mismatch.");
   } else {
     try {
       const userData = {
@@ -52,12 +52,11 @@ async function createUser(req, res) {
       console.log(userData);
       await User.create(userData)
         .then(() => {
-          console.log("User Created");
-          return res.redirect("/login");
+          return res.redirect("/login?msg=User created, please log in.");
         })
         .catch((e) => {
           console.log(e);
-          return res.redirect("/register/?msg=Username taken");
+          return res.redirect("/register/?msg=Username taken.");
         });
     } catch (e) {
       console.log(e);
