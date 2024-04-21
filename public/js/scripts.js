@@ -6,3 +6,10 @@ function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
   document.getElementById("myOverlay").style.display = "none";
 }
+
+document.addEventListener("DOMContentLoaded", function (event) {
+  var message = document.getElementById('alertMessage').innerText;
+  if (message !== "") {
+      alert(message)
+  }
+});

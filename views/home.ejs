@@ -53,10 +53,36 @@
                     <td>
                         <a href=<%=posts.path %>><%= posts.originalName %> </a>
                     </td>
+                    <td style="height: fit-content; width: fit-content; text-align: center; vertical-align: middle;">
+                        <a onclick="deletePost( '<%= posts._id %>' )"><i class="fa fa-trash"></i></a>
+                    </td>
                 </tr>
                 <% }); %>
         </tbody>
     </table>
 </div>
+
+<div id="alertMessage">
+    <%= message %>
+</div>
+
+<script>
+    function deletePost(id) {
+        fetch('/post/' + id, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error('Error deleting post:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+    }
+</script>
+
 
 </html>
