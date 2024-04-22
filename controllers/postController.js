@@ -42,16 +42,22 @@ async function deleteFile(filePath) {
 
 async function deletePost(req, res) {
   const id = req.params.id;
-  try {
-    const post = await Post.findByIdAndDelete(id);
-    await deleteFile(post.path);
-    res.sendStatus(200);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Error deleting post");
-  }
+  const username = req.cookies.username;
+  if (username)
+    try {
+      const post = await Post.findById(id);
+      if (username === post.postAuthor) {
+        await deleteFile(post.path);
+        await Post.findByIdAndDelete(id);
+        res.sendStatus(200);
+      } else {
+        res.status(401).send({ message : "Only post author can delete post."});
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Error deleting post");
+    }
 }
-
 
 async function wipeDatabase(req, res) {
   const posts = await Post.find();
