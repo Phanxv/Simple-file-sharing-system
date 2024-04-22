@@ -8,8 +8,8 @@ function w3_close() {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-  var message = document.getElementById('alertMessage').innerText;
-  if (message !== "") {
-      alert(message)
+  var message = document.getElementById("alertMessage").innerText;
+  if (message.trim() !== "") {
+    alert(message);
   }
 });

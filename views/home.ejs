@@ -24,46 +24,49 @@
     <div style="text-align: left;">
         <button style="margin: 10px;" class="button" onclick="location.href='/upload'">Share files</button>
     </div>
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <!-- <th scope="col">#</th> -->
-                <th scope="col">Name</th>
-                <th scope="col">Author</th>
-                <th scope="col">Timestamp</th>
-                <th scope="col">Description</th>
-                <th scope="col">Attachment</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% posts.forEach(function(posts){ %>
-                <tr>
-                    <th scope="row">
-                        <%= posts.postName %>
-                    </th>
-                    <td>
-                        <%= posts.postAuthor %>
-                    </td>
-                    <td>
-                        <%= posts.timeStamp.toLocaleString('en-TH', { timeZone: 'Asia/Bangkok' }) %>
-                    </td>
-                    <td>
-                        <%= posts.postDesp %>
-                    </td>
-                    <td>
-                        <a href=<%=posts.path %>><%= posts.originalName %> </a>
-                    </td>
-                    <td style="height: fit-content; width: fit-content; text-align: center; vertical-align: middle;">
-                        <a onclick="deletePost( '<%= posts._id %>' )"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-                <% }); %>
-        </tbody>
-    </table>
-</div>
-
-<div id="alertMessage">
-    <%= message %>
+    <div class="w3-container">
+        <% if(Object.keys(posts).length===0) { %>
+            <span class="w3-large">No one shared any content yet</span>
+            <% } else { %>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <!-- <th scope="col">#</th> -->
+                            <th scope="col">Name</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Timestamp</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Attachment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% posts.forEach(function(posts){ %>
+                            <tr>
+                                <th scope="row">
+                                    <%= posts.postName %>
+                                </th>
+                                <td>
+                                    <%= posts.postAuthor %>
+                                </td>
+                                <td>
+                                    <%= posts.timeStamp.toLocaleString('en-TH', { timeZone: 'Asia/Bangkok' }) %>
+                                </td>
+                                <td>
+                                    <%= posts.postDesp %>
+                                </td>
+                                <td>
+                                    <a href=<%=posts.path %>><%= posts.originalName %> </a>
+                                </td>
+                                <td
+                                    style="height: fit-content; width: fit-content; text-align: center; vertical-align: middle;">
+                                    <a onclick="deletePost( '<%= posts._id %>' )"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            <% } %>
+    </div>
 </div>
 
 <script>
@@ -71,16 +74,17 @@
         fetch('/post/' + id, {
             method: 'DELETE'
         })
-        .then(response => {
-            if (response.ok) {
-                window.location.reload();
-            } else {
-                console.error('Error deleting post:', response.statusText);
-            }
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Only post author can delete post');
+                    console.error('Error deleting post : ', response.statusText)
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
     }
 </script>
 
