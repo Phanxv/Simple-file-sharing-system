@@ -16,6 +16,7 @@ services:
       - 3000:3000
     volumes:
       - .:/usr/src/app
+      - /usr/src/app/node_modules
     environment:
       PORT: 3000
       MONGODB_URI: mongodb://mongo_db:27017
