@@ -1,30 +1,45 @@
 import { ReactNode } from "react";
-import { Link, useMatch, useResolvedPath } from "react-router-dom";
-
+import { useState } from 'react'
+import { NavLink } from "react-router-dom";
+import Logo from "./assets/site_logo.png";
+import Hamburger from "./assets/hamburger_white.png"
 const Navbar = () => {
+
+  const [showNavbar, setShowNavbar] = useState(false)
+
+  const handleShowNavbar = () => {
+    setShowNavbar(!showNavbar)
+  }
   return (
-    <nav className="topnav">
-      <IsActiveLink to="/">Home</IsActiveLink>
-      <IsActiveLink to="/login">Log in</IsActiveLink>
-      <IsActiveLink to="/register">Register</IsActiveLink>
-      <IsActiveLink to="/upload">Upload</IsActiveLink>
-    </nav>
+    <>
+      <nav className="navbar">
+        <div className="container">
+          <div className="logo">
+            <img src={Logo} alt="Logo" />
+          </div>
+          <div className="menu-icon" onClick={handleShowNavbar}>
+            <img src={Hamburger} alt="menu icon" />
+          </div>
+          <div className={`nav-elements  ${showNavbar && 'active'}`}>
+            <ul>
+              <li>
+                <NavLink to="/">Home</NavLink>
+              </li>
+              <li>
+                <NavLink to="/upload">Upload</NavLink>
+              </li>
+              <li>
+                <NavLink to="/login">Log in</NavLink>
+              </li>
+              <li>
+                <NavLink to="/register">Register</NavLink>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
-
-interface isActiveProps {
-  to: string;
-  children: ReactNode;
-}
-
-function IsActiveLink({ to, children }: isActiveProps) {
-  const resolvedPath = useResolvedPath(to);
-  const isActive = useMatch({ path: resolvedPath.pathname, end: true });
-  return (
-        <Link className={ isActive ? "active" : "" } to={to}>
-          {children}
-        </Link>
-  );
-}
 
 export default Navbar;
