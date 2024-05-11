@@ -28,7 +28,7 @@ body {
   width: auto;
 }
 
-.menu-icon img{
+.menu-icon img {
   display: none;
 }
 
@@ -75,7 +75,7 @@ body {
 }
 
 @media (max-width: 600px) {
-  .menu-icon img{
+  .menu-icon img {
     display: block;
     height: 40px;
     width: auto;
@@ -105,4 +105,64 @@ body {
     margin-right: unset;
     margin-top: 22px;
   }
+}
+
+.form-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 430px;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.form-container .form {
+  padding: 2rem; 
+}
+
+.form header {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.form input {
+  height: 50px;
+  width: calc(100% - 1.5rem);
+  padding: 0 10px;
+  font-size: 14px;
+  margin-bottom: 0rem;
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+.form input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form .button {
+  width: 100%;
+  background-color: #8b0000;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 20px 0px 0px 0px;
+  cursor: pointer;
+}
+.form .button:hover {
+  background: #aa210f;
+}
+.form .error {
+  color: red;
+  font-size: 14px;
+  padding-left: 10px;
 }
