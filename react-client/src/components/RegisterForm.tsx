@@ -25,6 +25,8 @@ const RegisterForm = () => {
     repassword_error: "",
   });
 
+  const [isShowPassCheck, setShowPassCheck] = useState(false)
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
@@ -67,6 +69,10 @@ const RegisterForm = () => {
     }
   };
 
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement> ) => {
+    setShowPassCheck(event.target.checked);
+  }
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     alert(
@@ -76,6 +82,7 @@ const RegisterForm = () => {
 
   console.log(formData);
   console.log(formError);
+  console.log(isShowPassCheck);
 
   return (
     <div className="form-container">
@@ -86,6 +93,7 @@ const RegisterForm = () => {
             type="text"
             name="username"
             id="username"
+            className="text-input"
             placeholder="Enter your username"
             value={formData.username}
             onChange={handleChange}
@@ -95,9 +103,10 @@ const RegisterForm = () => {
             {formError.username_error && formError.username_error}
           </span>
           <input
-            type="text"
+            type={isShowPassCheck ? "text" : "password"}
             name="password"
             id="password"
+            className="text-input"
             placeholder="Enter your password"
             value={formData.password}
             onChange={handleChange}
@@ -107,9 +116,10 @@ const RegisterForm = () => {
             {formError.password_error && formError.password_error}
           </span>
           <input
-            type="text"
+            type={isShowPassCheck ? "text" : "password"}
             name="repassword"
             id="repassword"
+            className="text-input"
             placeholder="Enter your password again"
             value={formData.repassword}
             onChange={handleChange}
@@ -118,6 +128,10 @@ const RegisterForm = () => {
           <span className="error">
             {formError.repassword_error && formError.repassword_error}
           </span>
+          <div style={{marginTop: "10px"}}>
+            <input type="checkbox" name="showPass" id="showPass" className="check-input" onChange={handleCheck}/>
+            <span className="text-span">Show password</span>
+          </div>
           <button type="submit" className="button">
             Submit
           </button>
