@@ -21,22 +21,46 @@ const LoginForm = () => {
     password_error: "",
   });
 
-  const [isShowPassCheck, setShowPassCheck] = useState(false)
+  const [isShowPassCheck, setShowPassCheck] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
-  const handleCheck = (event: React.ChangeEvent<HTMLInputElement> ) => {
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     setShowPassCheck(event.target.checked);
-  }
+  };
+
+  const signInUser = async (userData: FormInput) => {
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("Response:", data);
+      alert("Login successful!");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Internal Server Error");
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    alert(
-      `username: ${formData.username}, password: ${formData.password}`
-    );
+    signInUser(formData);
+    alert(`username: ${formData.username}, password: ${formData.password}`);
   };
 
   return (
@@ -70,8 +94,14 @@ const LoginForm = () => {
           <span className="error">
             {formError.password_error && formError.password_error}
           </span>
-          <div style={{marginTop: "10px"}}>
-            <input type="checkbox" name="showPass" id="showPass" className="check-input" onChange={handleCheck}/>
+          <div style={{ marginTop: "10px" }}>
+            <input
+              type="checkbox"
+              name="showPass"
+              id="showPass"
+              className="check-input"
+              onChange={handleCheck}
+            />
             <span className="text-span">Show password</span>
           </div>
           <button type="submit" className="button">

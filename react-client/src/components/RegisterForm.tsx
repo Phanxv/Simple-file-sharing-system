@@ -25,7 +25,9 @@ const RegisterForm = () => {
     repassword_error: "",
   });
 
-  const [isShowPassCheck, setShowPassCheck] = useState(false)
+  const [isShowPassCheck, setShowPassCheck] = useState(false);
+
+  //const [] = useMutation(() => );
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -69,20 +71,47 @@ const RegisterForm = () => {
     }
   };
 
-  const handleCheck = (event: React.ChangeEvent<HTMLInputElement> ) => {
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     setShowPassCheck(event.target.checked);
-  }
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    alert(
-      `username: ${formData.username}, password: ${formData.password}, repassword: ${formData.repassword}`
-    );
   };
 
-  console.log(formData);
-  console.log(formError);
-  console.log(isShowPassCheck);
+  const createUser = async (userData:FormInput) => {
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("Response:", data);
+      alert("Registration successful!");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Internal Server Error");
+    }
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (
+      formData.username.length < 5 ||
+      formData.password.length < 8 ||
+      formData.repassword !== formData.password
+    ) {
+      alert("Requirement not met");
+    } else {
+      createUser(formData);
+    }
+  };
 
   return (
     <div className="form-container">
@@ -128,8 +157,14 @@ const RegisterForm = () => {
           <span className="error">
             {formError.repassword_error && formError.repassword_error}
           </span>
-          <div style={{marginTop: "10px"}}>
-            <input type="checkbox" name="showPass" id="showPass" className="check-input" onChange={handleCheck}/>
+          <div style={{ marginTop: "10px" }}>
+            <input
+              type="checkbox"
+              name="showPass"
+              id="showPass"
+              className="check-input"
+              onChange={handleCheck}
+            />
             <span className="text-span">Show password</span>
           </div>
           <button type="submit" className="button">

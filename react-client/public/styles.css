@@ -32,9 +32,6 @@ body {
   display: none;
 }
 
-.nav-elements {
-}
-
 .nav-elements ul {
   display: flex;
   justify-content: space-between;
