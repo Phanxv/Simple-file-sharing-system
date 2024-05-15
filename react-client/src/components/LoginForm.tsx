@@ -34,8 +34,9 @@ const LoginForm = () => {
 
   const signInUser = async (userData: FormInput) => {
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch("http://localhost:3000/signin", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -45,12 +46,9 @@ const LoginForm = () => {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
       const data = await response.json();
       console.log("Response:", data);
-      alert("Login successful!");
+      alert(data.message);
     } catch (error) {
       console.error("Error:", error);
       alert("Internal Server Error");
@@ -60,7 +58,6 @@ const LoginForm = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     signInUser(formData);
-    alert(`username: ${formData.username}, password: ${formData.password}`);
   };
 
   return (

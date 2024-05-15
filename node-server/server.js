@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors({ origin: 'http://localhost:4000' }));
+app.use(cors({ origin: 'http://localhost:4000' , credentials: true }));
 
 app.set("view engine", "ejs");
 

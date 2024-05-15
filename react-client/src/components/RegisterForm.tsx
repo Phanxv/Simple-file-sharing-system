@@ -77,7 +77,7 @@ const RegisterForm = () => {
 
   const createUser = async (userData:FormInput) => {
     try {
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch("http://localhost:3000/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,13 +87,9 @@ const RegisterForm = () => {
           password: formData.password,
         }),
       });
-
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
       const data = await response.json();
       console.log("Response:", data);
-      alert("Registration successful!");
+      alert(data.message);
     } catch (error) {
       console.error("Error:", error);
       alert("Internal Server Error");
