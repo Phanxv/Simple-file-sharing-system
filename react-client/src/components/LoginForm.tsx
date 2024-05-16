@@ -1,6 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { RootContext } from "../pages/Root";
 
 const LoginForm = () => {
+  const context = useContext(RootContext);
+
+  if (!context) {
+    throw new Error("ChildComponent must be used within a RootContextProvider");
+  }
+
+  const { setUser } = context;
+
   interface FormInput {
     username: string;
     password: string;
@@ -48,7 +57,12 @@ const LoginForm = () => {
 
       const data = await response.json();
       console.log("Response:", data);
-      alert(data.message);
+      if (response.ok) {
+        setUser(data.username);
+        alert("Logged in");
+      } else {
+        alert(data.message);
+      }
     } catch (error) {
       console.error("Error:", error);
       alert("Internal Server Error");

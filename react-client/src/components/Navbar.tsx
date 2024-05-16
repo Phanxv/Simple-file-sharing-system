@@ -1,8 +1,7 @@
-import { ReactNode } from "react";
 import { useState } from 'react'
 import { NavLink } from "react-router-dom";
-import Logo from "./assets/site_logo.png";
-import Hamburger from "./assets/hamburger_white.png"
+import Logo from "../assets/site_logo.png";
+import Hamburger from "../assets/hamburger_white.png"
 const Navbar = () => {
 
   const [showNavbar, setShowNavbar] = useState(false)

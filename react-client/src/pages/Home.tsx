@@ -1,7 +1,22 @@
+import { useContext, useState } from "react";
+import { RootContext } from "./Root";
 const Home = () => {
-  return (
-    <div>🏠 Home -- Under Construction 🚧</div>
-  )
-}
+  const context = useContext(RootContext);
 
-export default Home
+  if (!context) {
+    throw new Error("ChildComponent must be used within a RootContextProvider");
+  }
+
+  const { user } = context;
+
+  return (
+    <div className="hero-image">
+      <div className="hero-text">
+        Hello, {user ? user : "please log in."}
+        <br />
+        🏠 Home -- Under Construction 🚧</div>
+    </div>
+  );
+};
+
+export default Home;
