@@ -5,15 +5,11 @@ const path = require("path");
 
 async function createPost(req, res) {
   console.log(req.body);
-  console.log(req.file);
-  console.log(req.cookies.username);
   try {
     const postData = {
-      postName: req.body.postName,
-      postDesp: req.body.postDesp,
+      postName: req.body.title,
       path: req.file.path,
       originalName: req.file.originalname,
-      postAuthor: req.cookies.username,
     };
 
     await Post.create(postData)
@@ -25,9 +21,9 @@ async function createPost(req, res) {
       });
   } catch (e) {
     console.log(e);
-    return res.redirect("/upload");
+    return res.sendStatus(400);
   } finally {
-    return res.redirect("/");
+    return res.sendStatus(200);
   }
 }
 

@@ -5,10 +5,6 @@ const Post = new mongoose.Schema({
         type: String,
         required: true
     },
-    postDesp: {
-        type: String,
-        required: true
-    },
     timeStamp: {
         type: Date,
         default: Date.now

@@ -111,9 +111,9 @@ const RegisterForm = () => {
 
   return (
     <div className="form-container">
-      <div className="registration form">
+      <div className="form">
         <header>Sign up</header>
-        <form action="/register" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="username"

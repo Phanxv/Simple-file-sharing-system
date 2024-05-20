@@ -1,6 +1,8 @@
+import UploadForm from "../components/UploadForm";
+
 const Upload = () => {
     return (
-      <div>📁 Upload -- Under Construction 🚧</div>
+      <UploadForm/>
     )
   }
   

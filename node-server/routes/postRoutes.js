@@ -12,7 +12,7 @@ const {
   serveFile,
 } = require("../controllers/postController");
 
-router.post("/post", upload.single("attachment"), createPost);
+router.post("/post", upload.single("file"), createPost);
 router.delete("/post/:id", jwtAuth, deletePost);
 router.delete("/database", wipeDatabase); //for deveopment purpose only
 router.get("/database/:data", fetchData); //for deveopment purpose only

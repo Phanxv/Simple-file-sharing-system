@@ -1,0 +1,87 @@
+import React, { createContext, useEffect, useState } from "react";
+import DragDropFIle from "./DragDropFIle";
+import { RootContext } from "../pages/Root";
+
+interface FileContextType {
+  files: FileList | null;
+  setFiles: React.Dispatch<React.SetStateAction<FileList | null>>;
+}
+
+export const FileContext = createContext<FileContextType | undefined>(
+  undefined
+);
+
+const UploadForm = () => {
+  const [files, setFiles] = useState<FileList | null>(null);
+  const [title, setTitle] = useState<string>("");
+  const contextValue: FileContextType = { files, setFiles };
+
+  useEffect(() => {
+    console.log(files);
+  }, [files]);
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {value} = event.target
+    setTitle(value)
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!files || !title) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("file", files[0]);
+    try {
+      const response = await fetch("http://localhost:3000/post", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("File uploaded successfully", data);
+      } else {
+        console.error("Error uploading file", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error uploading file", error);
+    }
+  };
+
+  return (
+    <FileContext.Provider value={contextValue}>
+      <div className="upload-form-container">
+        <div className="registration form">
+          <header>Upload file</header>
+          <form encType="multipart/form-data" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              className="text-input"
+              placeholder="Enter Upload title"
+              onChange={handleTitleChange}
+              required
+            />
+            <DragDropFIle />
+            {files && (
+              <input type="submit" value="Upload" className="button"></input>
+            )}
+            {files && (
+              <input
+                type="button"
+                value="Cancel"
+                className="button-inv"
+                onClick={() => setFiles(null)}
+              ></input>
+            )}
+          </form>
+        </div>
+      </div>
+    </FileContext.Provider>
+  );
+};
+
+export default UploadForm;
