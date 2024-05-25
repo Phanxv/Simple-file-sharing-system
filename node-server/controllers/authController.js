@@ -17,13 +17,11 @@ async function signInUser(req, res) {
         { expiresIn: "1h" }
       );
       console.log(`User ${user.username} logged in with token : ${token}`);
-      res.cookie("token", token, { httpOnly: true });
-      res.cookie("username", user.username, { httpOnly: true });
       user.isLoggedin = true;
       user.jwtToken = await bcrypt.hash(token, 10);
       user.lastLoggedin = Date.now();
       await user.save();
-      return res.status(200).json({ message: "Log in successful!", username: user.username });
+      return res.status(200).json({ message: "Log in successful!", token: token });
     } else {
       return res
         .status(400)

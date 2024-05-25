@@ -1,6 +1,7 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import DragDropFIle from "./DragDropFIle";
 import { RootContext } from "../pages/Root";
+import { Cookies, useCookies } from "react-cookie";
 
 interface FileContextType {
   files: FileList | null;
@@ -14,7 +15,13 @@ export const FileContext = createContext<FileContextType | undefined>(
 const UploadForm = () => {
   const [files, setFiles] = useState<FileList | null>(null);
   const [title, setTitle] = useState<string>("");
-  const contextValue: FileContextType = { files, setFiles };
+  const fileContext: FileContextType = { files, setFiles };
+  const rootContext = useContext(RootContext);
+  if (!rootContext) {
+    throw new Error("ChildComponent must be used within a RootContextProvider");
+  }
+
+  const { user } = rootContext;
 
   useEffect(() => {
     console.log(files);
@@ -32,9 +39,15 @@ const UploadForm = () => {
       return;
     }
 
+    if(!user) {
+      alert("Please Log in before uploading file.")
+      return;
+    }
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("file", files[0]);
+    formData.append("author", user);
     try {
       const response = await fetch("http://localhost:3000/post", {
         method: "POST",
@@ -53,7 +66,7 @@ const UploadForm = () => {
   };
 
   return (
-    <FileContext.Provider value={contextValue}>
+    <FileContext.Provider value={fileContext}>
       <div className="upload-form-container">
         <div className="registration form">
           <header>Upload file</header>

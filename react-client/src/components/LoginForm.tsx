@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import { RootContext } from "../pages/Root";
+import { jwtDecode } from "jwt-decode";
+import { TokenInterface } from "../pages/Root";
 
 const LoginForm = () => {
   const context = useContext(RootContext);
@@ -8,7 +10,7 @@ const LoginForm = () => {
     throw new Error("ChildComponent must be used within a RootContextProvider");
   }
 
-  const { setUser } = context;
+  const { setUser, setToken } = context;
 
   interface FormInput {
     username: string;
@@ -58,7 +60,10 @@ const LoginForm = () => {
       const data = await response.json();
       console.log("Response:", data);
       if (response.ok) {
-        setUser(data.username);
+        //setUser(data.username);
+        console.log(data.token);
+        console.log(jwtDecode(data.token));
+        setToken(data.token);
         alert("Logged in");
       } else {
         alert(data.message);

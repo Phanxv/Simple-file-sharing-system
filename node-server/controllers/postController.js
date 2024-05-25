@@ -4,10 +4,12 @@ const fs = require("fs").promises;
 const path = require("path");
 
 async function createPost(req, res) {
-  console.log(req.body);
+  console.log(req.body.title);
+  console.log(req.body.author);
   try {
     const postData = {
       postName: req.body.title,
+      postAuthor: req.body.author,
       path: req.file.path,
       originalName: req.file.originalname,
     };
