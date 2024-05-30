@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import DragDropFIle from "./DragDropFIle";
 import { RootContext } from "../pages/Root";
-import { Cookies, useCookies } from "react-cookie";
 
 interface FileContextType {
   files: FileList | null;

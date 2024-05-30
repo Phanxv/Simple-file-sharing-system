@@ -60,7 +60,6 @@ const LoginForm = () => {
       const data = await response.json();
       console.log("Response:", data);
       if (response.ok) {
-        //setUser(data.username);
         console.log(data.token);
         console.log(jwtDecode(data.token));
         setToken(data.token);

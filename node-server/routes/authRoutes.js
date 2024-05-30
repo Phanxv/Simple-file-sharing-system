@@ -28,7 +28,7 @@ router.get("/login", (req, res) => {
 
 
 router.post("/signin", signInUser);
-router.get("/signout", jwtAuth, signOutUser);
+router.post("/signout", signOutUser);
 router.post("/user", createUser);
 
 module.exports = router;

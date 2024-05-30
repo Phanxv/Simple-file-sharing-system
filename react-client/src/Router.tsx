@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Upload from "./pages/Upload";
 import Root from './pages/Root';
+import Logout from './pages/Logout';
 
 const Router = createBrowserRouter(
     [
@@ -29,6 +30,10 @@ const Router = createBrowserRouter(
                 {
                     path: "/upload",
                     element: <Upload/>
+                },
+                {
+                    path: "/logout",
+                    element: <Logout/>
                 },
                 {
                     path:"*",

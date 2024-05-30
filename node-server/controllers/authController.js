@@ -31,13 +31,11 @@ async function signInUser(req, res) {
 }
 
 async function signOutUser(req, res) {
-  const query = User.where({ username: req.cookies.username });
+  const query = User.where({ username: req.body.username });
   const user = await query.findOne();
   user.isLoggedin = false;
   await user.save();
-  res.clearCookie("token");
-  res.clearCookie("username");
-  res.redirect("/");
+  res.status(200).json({ message: "Log out sucessful!" })
 }
 
 async function createUser(req, res) {
