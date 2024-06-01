@@ -27,6 +27,10 @@ const Post = new mongoose.Schema({
         type: String,
         required: true,
         default: "anon"
+    },
+    fileType: {
+        type: String,
+        required: true,
     }
 })
 

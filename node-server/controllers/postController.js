@@ -12,20 +12,20 @@ async function createPost(req, res) {
       postAuthor: req.body.author,
       path: req.file.path,
       originalName: req.file.originalname,
+      fileType: path.extname(req.file.originalname)
     };
 
     await Post.create(postData)
       .then(() => {
         console.log("Post Created");
+        return res.status(200).json({message:"Upload Successful"})
       })
       .catch((e) => {
         console.log(e);
       });
   } catch (e) {
     console.log(e);
-    return res.sendStatus(400);
-  } finally {
-    return res.sendStatus(200);
+    return res.status(400).json({message:"Upload failed"})
   }
 }
 
