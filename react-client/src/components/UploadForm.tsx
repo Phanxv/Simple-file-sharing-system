@@ -56,6 +56,7 @@ const UploadForm = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("File uploaded successfully", data);
+        alert(data.message)
       } else {
         console.error("Error uploading file", response.statusText);
       }

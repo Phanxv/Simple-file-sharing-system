@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+
   interface FormInput {
     username: string;
     password: string;
@@ -90,6 +93,7 @@ const RegisterForm = () => {
       const data = await response.json();
       console.log("Response:", data);
       alert(data.message);
+      navigate("/login")
     } catch (error) {
       console.error("Error:", error);
       alert("Internal Server Error");

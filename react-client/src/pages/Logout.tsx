@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { RootContext } from "./Root";
 import { useNavigate } from "react-router-dom";
+
 const Logout = () => {
   const context = useContext(RootContext);
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const Logout = () => {
       alert("Internal Server Error");
     }
   };
-  
+
   return (
     <div className="upload-form-container">
       <div className="registration form">

@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
 import { RootContext } from "../pages/Root";
 import { jwtDecode } from "jwt-decode";
-import { TokenInterface } from "../pages/Root";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const context = useContext(RootContext);
 
   if (!context) {
@@ -64,6 +65,7 @@ const LoginForm = () => {
         console.log(jwtDecode(data.token));
         setToken(data.token);
         alert("Logged in");
+        navigate("/")
       } else {
         alert(data.message);
       }

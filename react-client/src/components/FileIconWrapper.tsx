@@ -14,6 +14,7 @@ const FileIconWrapper = (props: FileIconWrapperProps) => {
     case ".tiff":
     case ".bmp":
     case ".gif":
+    case ".webp":
       return <FileIcon extension={props.fileType} type="image"></FileIcon>;
     case ".mp4":
     case ".mov":
