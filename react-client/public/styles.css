@@ -225,6 +225,7 @@ body, html{
   font-weight:800;
   color: white;
   padding: 10px;
+  margin: 20px 0px 0px 20px ;
 }
 
 .dropzone {
@@ -250,30 +251,44 @@ body, html{
   margin-top: 5px;
 }
 
-.file-item {
-  display: inline-block;
-  margin: 10px; /* Adjust margin for spacing */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 0fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 500px;
+  max-width: 100%;
+  margin: 10px 5px 10px 5px;
+}
+
+.icon {
+  flex-shrink: 0;
+  padding: 20px;
+  width: 60px;
+  height: 60px;
+}
+
+.text {
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #fff;
-  width: 150px; /* Adjust width for desired size */
-  cursor: pointer; /* Add hover effect for click interaction */
-  white-space: nowrap; /* Prevent wrapping to next line */
-  overflow: hidden; /* Hide content that overflows */
 }
 
-.file-icon {
-  width: 120px; /* Adjust size as needed */
-  color: #666;
-  margin-bottom: 5px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 75%;
-}
-
-.file-title {
-  font-size: medium;
-  font-weight:700;
+.text h2 {
+  margin: 0;
+  font-size: 1.5em;
   color: #333;
+}
+
+.text p {
+  font-size: 14px;
+  margin: 5px 0;
+  color: #666;
 }

@@ -2,6 +2,14 @@ import { useContext, useState, useEffect } from "react";
 import { RootContext } from "./Root";
 import FileDisplay from "../components/FileDisplay";
 
+interface PostInterface {
+  originalName: string;
+  postName: string;
+  postAuthor: string;
+  timeStamp: string;
+  fileType: string;
+}
+
 const Home = () => {
   const context = useContext(RootContext);
 
@@ -11,6 +19,8 @@ const Home = () => {
 
   const { user } = context;
 
+  const [posts, setPosts] = useState<PostInterface[] | null>(null);
+
   useEffect(() => {
     const url = "http://localhost:3000/database/posts";
 
@@ -18,15 +28,32 @@ const Home = () => {
       method: "GET",
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        setPosts(data);
+        console.log(data);
+      });
   }, []);
 
   return (
     <>
-      <div className="container">
-        <div className="hero-text">Logged in as : {user ? user : "Not logged in yet"}</div>
-        <FileDisplay fileTitle="test-1" fileType=".ini"/>
-        <FileDisplay fileTitle="test-2" fileType=".pdf"/>
+    <div className="hero-text">
+      Hello, {user}
+    </div>
+      <div className="card-grid">
+        {posts ? (
+          posts.map((post, index) => (
+            <div key={index}>
+              <FileDisplay
+                fileTitle={post.postName}
+                fileType={post.fileType}
+                timeStamp={post.timeStamp}
+                fileAuthor={post.postAuthor}
+              ></FileDisplay>
+            </div>
+          ))
+        ) : (
+          <p>No posts available</p>
+        )}
       </div>
     </>
   );

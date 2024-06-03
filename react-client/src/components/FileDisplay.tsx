@@ -1,19 +1,25 @@
 import React from "react";
 import FileIconWrapper from "./FileIconWrapper";
-import { FileIcon, defaultStyles } from "react-file-icon";
 
 interface FileIconProps {
-    fileType: string;
-    fileTitle: string;
+  fileType: string;
+  fileTitle: string;
+  timeStamp: string;
+  fileAuthor: string;
 }
 
-const FileDisplay = (props:FileIconProps) => {
+const FileDisplay = (props: FileIconProps) => {
+  const timeObj = new Date(props.timeStamp);
   return (
-    <div className="file-item">
-      <div className="file-icon">
+    <div className="card">
+      <div className="icon">
         <FileIconWrapper fileType={props.fileType}></FileIconWrapper>
       </div>
-      <div className="file-title">File Title : {props.fileTitle}</div>
+      <div className="text">
+        Title : {props.fileTitle}
+        <p>{timeObj.toLocaleString()}</p>
+        <p>by : {props.fileAuthor}</p>
+      </div>
     </div>
   );
 };

@@ -58,6 +58,7 @@ const FileIconWrapper = (props: FileIconWrapperProps) => {
     case ".conf":
     case ".config":
     case ".env":
+    case ".rpm":
       return <FileIcon extension={props.fileType} type="settings"></FileIcon>;
     case ".pdf":
       return (
