@@ -8,6 +8,7 @@ import Register from "./pages/Register";
 import Upload from "./pages/Upload";
 import Root from './pages/Root';
 import Logout from './pages/Logout';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const Router = createBrowserRouter(
     [
@@ -15,10 +16,6 @@ const Router = createBrowserRouter(
             path : "/",
             element : <Root/>,
             children : [
-                {
-                    path: "/",
-                    element: <Home/>
-                },
                 {
                     path: "/login",
                     element: <Login/>
@@ -28,12 +25,21 @@ const Router = createBrowserRouter(
                     element: <Register/>
                 },
                 {
-                    path: "/upload",
-                    element: <Upload/>
-                },
-                {
                     path: "/logout",
                     element: <Logout/>
+                },
+                {
+                    element: <ProtectedRoute/>,
+                    children: [
+                        {
+                            path: "/upload",
+                            element: <Upload/>
+                        },
+                        {
+                            path: "/",
+                            element: <Home/>
+                        },
+                    ]
                 },
                 {
                     path:"*",

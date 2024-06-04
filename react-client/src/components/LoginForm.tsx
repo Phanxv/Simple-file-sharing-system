@@ -64,6 +64,7 @@ const LoginForm = () => {
         console.log(data.token);
         console.log(jwtDecode(data.token));
         setToken(data.token);
+        setUser(data.user);
         alert("Logged in");
         navigate("/")
       } else {

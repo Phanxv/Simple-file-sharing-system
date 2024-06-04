@@ -21,7 +21,7 @@ async function signInUser(req, res) {
       user.jwtToken = await bcrypt.hash(token, 10);
       user.lastLoggedin = Date.now();
       await user.save();
-      return res.status(200).json({ message: "Log in successful!", token: token });
+      return res.status(200).json({ message: "Log in successful!", token: token, user: user.username });
     } else {
       return res
         .status(400)
