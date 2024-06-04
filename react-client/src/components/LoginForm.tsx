@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { RootContext } from "../pages/Root";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,13 @@ const LoginForm = () => {
     throw new Error("ChildComponent must be used within a RootContextProvider");
   }
 
-  const { setUser, setToken } = context;
+  const { user, setUser, token, setToken } = context;
+  
+  useEffect(() => {
+    if(user){
+      navigate("/")
+    }
+  }, []);
 
   interface FormInput {
     username: string;

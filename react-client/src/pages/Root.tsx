@@ -37,7 +37,7 @@ const Root = () => {
 
   useEffect(() => {
     sessionStorage.setItem("token", (token || "").toString());
-    if(token) { setUser(jwtDecode<TokenInterface>(token).username); console.log("Username set")}
+    if(token) { setUser(jwtDecode<TokenInterface>(token).username); console.log(`Username set from token : ${token}`)}
   }, [token]);
 
   console.log(user);
