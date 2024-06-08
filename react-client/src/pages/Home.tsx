@@ -2,14 +2,6 @@ import { useContext, useState, useEffect } from "react";
 import { RootContext } from "./Root";
 import FileDisplay from "../components/FileDisplay";
 
-interface PostInterface {
-  originalName: string;
-  postName: string;
-  postAuthor: string;
-  timeStamp: string;
-  fileType: string;
-}
-
 const Home = () => {
   const context = useContext(RootContext);
 
@@ -17,22 +9,9 @@ const Home = () => {
     throw new Error("ChildComponent must be used within a RootContextProvider");
   }
 
-  const { user } = context;
+  const { user, posts } = context;
 
-  const [posts, setPosts] = useState<PostInterface[] | null>(null);
-
-  useEffect(() => {
-    const url = "http://localhost:3000/database/posts";
-
-    fetch(url, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setPosts(data);
-        console.log(data);
-      });
-  }, []);
+  
 
   return (
     <>

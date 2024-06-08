@@ -9,7 +9,7 @@ const Logout = () => {
   const { user, setUser, setToken } = context;
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:3000/signout", {
+      const response = await fetch("http://" + window.location.hostname + ":3000/signout", {
         method: "POST",
         credentials: "include",
         headers: {

@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
-body, html{
+body,
+html {
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
@@ -74,6 +75,17 @@ body, html{
   .nav-elements ul li:not(:last-child) {
     margin-right: 30px;
   }
+  .form-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
 }
 
 @media (max-width: 600px) {
@@ -108,21 +120,22 @@ body, html{
     margin-right: unset;
     margin-top: 22px;
   }
+
 }
 
-.upload-form-container{
+.upload-form-container {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-  max-width: 55%;
+  transform: translate(-50%, -50%);
+  max-width: 70%;
   width: 100%;
   background: #fff;
   border-radius: 7px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-.upload-form-container .form{
+.upload-form-container .form {
   padding: 2rem;
 }
 
@@ -139,7 +152,7 @@ body, html{
 }
 
 .form-container .form {
-  padding: 2rem; 
+  padding: 2rem;
 }
 
 .form header {
@@ -172,7 +185,7 @@ body, html{
 
 .form input.check-input {
   display: inline-block;
-  vertical-align: middle; 
+  vertical-align: middle;
 }
 
 .form .button {
@@ -222,10 +235,10 @@ body, html{
 
 .hero-text {
   font-size: xx-large;
-  font-weight:800;
+  font-weight: 800;
   color: white;
   padding: 10px;
-  margin: 20px 0px 0px 20px ;
+  margin: 20px 0px 0px 20px;
 }
 
 .dropzone {

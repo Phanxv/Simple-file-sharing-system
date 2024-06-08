@@ -20,7 +20,7 @@ const UploadForm = () => {
     throw new Error("ChildComponent must be used within a RootContextProvider");
   }
 
-  const { user } = rootContext;
+  const { user, setRefetch } = rootContext;
 
   useEffect(() => {
     console.log(files);
@@ -48,7 +48,7 @@ const UploadForm = () => {
     formData.append("file", files[0]);
     formData.append("author", user);
     try {
-      const response = await fetch("http://localhost:3000/post", {
+      const response = await fetch("http://" + window.location.hostname + ":3000/post", {
         method: "POST",
         body: formData,
       });
@@ -56,6 +56,7 @@ const UploadForm = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("File uploaded successfully", data);
+        setRefetch(true)
         alert(data.message)
       } else {
         console.error("Error uploading file", response.statusText);
@@ -68,7 +69,7 @@ const UploadForm = () => {
   return (
     <FileContext.Provider value={fileContext}>
       <div className="upload-form-container">
-        <div className="registration form">
+        <div className="form">
           <header>Upload file</header>
           <form encType="multipart/form-data" onSubmit={handleSubmit}>
             <input

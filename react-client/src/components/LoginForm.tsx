@@ -49,10 +49,10 @@ const LoginForm = () => {
   const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     setShowPassCheck(event.target.checked);
   };
-
+  console.log(window.location.hostname)
   const signInUser = async (userData: FormInput) => {
     try {
-      const response = await fetch("http://localhost:3000/signin", {
+      const response = await fetch("http://" + window.location.hostname + ":3000/signin", {
         method: "POST",
         credentials: "include",
         headers: {
