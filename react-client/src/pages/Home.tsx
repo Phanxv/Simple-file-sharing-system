@@ -27,6 +27,8 @@ const Home = () => {
                 fileType={post.fileType}
                 timeStamp={post.timeStamp}
                 fileAuthor={post.postAuthor}
+                fileId={post._id}
+                fileName={post.originalName}
               ></FileDisplay>
             </div>
           ))

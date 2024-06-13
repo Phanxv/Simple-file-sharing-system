@@ -94,10 +94,9 @@ async function fetchData(req, res) {
 async function serveFile(req, res) {
   console.log("requested file : " + req.params.fileId);
   try {
-    const query = Post.where({ path: "storage/" + req.params.fileId });
-    const post = await query.findOne();
+    const post = await Post.findById(req.params.fileId);
     res.download(
-      path.join(process.env.UPLOAD_PATH, req.params.fileId),
+      post.path,
       post.originalName
     );
     post.downloadCnt++;

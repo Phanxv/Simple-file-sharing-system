@@ -21,6 +21,7 @@ interface PostInterface {
   postAuthor: string;
   timeStamp: string;
   fileType: string;
+  _id : string; 
 }
 
 export interface TokenInterface {
