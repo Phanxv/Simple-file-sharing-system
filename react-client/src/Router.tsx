@@ -25,10 +25,6 @@ const Router = createBrowserRouter(
                     element: <Register/>
                 },
                 {
-                    path: "/logout",
-                    element: <Logout/>
-                },
-                {
                     element: <ProtectedRoute/>,
                     children: [
                         {
@@ -38,6 +34,10 @@ const Router = createBrowserRouter(
                         {
                             path: "/",
                             element: <Home/>
+                        },
+                        {
+                            path: "/logout",
+                            element: <Logout/>
                         },
                     ]
                 },

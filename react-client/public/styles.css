@@ -287,7 +287,15 @@ html {
   flex-shrink: 0;
   padding: 20px;
   width: 60px;
-  height: 60px;
+  height: auto;
+}
+
+.icon img {
+  flex-shrink: 0;
+  padding: 0px;
+  width: 60px;
+  height: auto;
+  padding-bottom: 12px;
 }
 
 .text {
