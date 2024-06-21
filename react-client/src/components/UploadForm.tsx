@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import DragDropFIle from "./DragDropFIle";
 import { RootContext } from "../pages/Root";
+import { useNavigate } from "react-router-dom";
 
 interface FileContextType {
   files: FileList | null;
@@ -16,6 +17,8 @@ const UploadForm = () => {
   const [title, setTitle] = useState<string>("");
   const fileContext: FileContextType = { files, setFiles };
   const rootContext = useContext(RootContext);
+  const navigate = useNavigate()
+
   if (!rootContext) {
     throw new Error("ChildComponent must be used within a RootContextProvider");
   }
@@ -58,6 +61,7 @@ const UploadForm = () => {
         console.log("File uploaded successfully", data);
         setRefetch(true)
         alert(data.message)
+        navigate("/")
       } else {
         console.error("Error uploading file", response.statusText);
       }
