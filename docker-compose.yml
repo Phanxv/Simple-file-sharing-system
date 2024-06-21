@@ -18,16 +18,16 @@ services:
     depends_on:
       - mongodb
 
-  #react-client:
-  #  build:
-  #    context: ./react-client
-  #    dockerfile: Dockerfile
-  #  environment:
-  #    CHOKIDAR_USEPOLLING: "true"
-  #  volumes:
-  #    - ./react-client:/usr/src/app
-  #  ports:
-  #    - "4000:4000"
+  react-client:
+    build:
+      context: ./react-client
+      dockerfile: Dockerfile
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./react-client:/usr/src/app
+    ports:
+      - "4000:4000"
 
   mongodb:
     image: mongo:latest
